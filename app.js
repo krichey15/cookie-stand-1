@@ -8,18 +8,25 @@ var firstAndPikeLocation = {
   maxCustomersPerHour : 65,
   averageCookiesSoldPerCust : 6.3,
   hoursOfOperation : ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'],
-  hourlyCookieSales: []
+  hourlyCookieSales: [0]
 };
+
+//below is a method I've defined for my 1st and Pike location object that's sole purpose is to generate and return TWO NUMBERS: The total amount of cookies sold overall AND the total amount of cookies sold in the past hour. Total cookies sold is stored in the first [0] index of the hourly cookie sales array while the amount of cookies sold in the last hour is stored in the second [1] index of the array.
 
 firstAndPikeLocation.generateRandomCookiesPerHour = function(min, max) {
   var randomCustPerHour = Math.floor(Math.random() * (max - min + 1)) + min;
-  firstAndPikeLocation.hourlyCookieSales.push(randomCustPerHour * firstAndPikeLocation.averageCookiesSoldPerCust);
+  console.log(firstAndPikeLocation.hourlyCookieSales);
+  firstAndPikeLocation.hourlyCookieSales[1] = randomCustPerHour * Math.floor(firstAndPikeLocation.averageCookiesSoldPerCust);
+  firstAndPikeLocation.hourlyCookieSales[0] = firstAndPikeLocation.hourlyCookieSales[0] + firstAndPikeLocation.hourlyCookieSales[1];
   return firstAndPikeLocation.hourlyCookieSales;
 };
 
-firstAndPikeLocation.generateRandomCookiesPerHour(firstAndPikeLocation.minCustomersPerHour, firstAndPikeLocation.maxCustomersPerHour);
+//below is a for loop I've created that loops through the hours of operation starting at 6am and displays both how many total cookies the store has sold AND how many cookies were sold in the last hour.
 
-console.log(firstAndPikeLocation.hourlyCookieSales);
+for (i = 0; i < 15; i++) {
+  firstAndPikeLocation.generateRandomCookiesPerHour(firstAndPikeLocation.minCustomersPerHour, firstAndPikeLocation.maxCustomersPerHour);
+  console.log('At ' + firstAndPikeLocation.hoursOfOperation[i] + ' total amount of cookies sold so far is ' + firstAndPikeLocation.hourlyCookieSales[0] + '. Total cookies sold this hour were ' + firstAndPikeLocation.hourlyCookieSales[1] + '.');
+}
 
 var seatacLocation = {
   location : 'Seatac International Airport',
