@@ -49,6 +49,7 @@ printTableHeadingHours(firstAndPikeLocation);
 var tbodyEl = document.getElementById('store-information-table');
 
 var printCookieSales = function(store) {
+
   for (var i = 0; i < store.hoursOfOperation.length; i++) {
     generateRandomCookiesPerHour(store);
     console.log('In the ' + store.location + ' location, at ' + store.hoursOfOperation[i] + ', total amount of cookies sold is ' + store.hourlyCookieSales[0] + '. Total cookies sold this hour were ' + store.hourlyCookieSales[1] + '.');
@@ -63,10 +64,14 @@ for (var i = 0; i < storesList.length; i++) {
   var trEl = document.createElement('tr');
   printCookieSales(storesList[i]);
   tbodyEl.appendChild(trEl);
-  if (i === 5) {
-    var trEl = document.createElement('tr');
-    var storeInfoRow = document.createElement('td');
-    storeInfoRow.textContent = store.hourlyCookieSales[0];
-    tbodyEl.appendChild(trEl);
-  }
 }
+
+var tFootEl = document.getElementById('totals');
+var tFootTrEl = document.createElement('tr');
+
+for (var i = 0; i < storesList.length; i++) {
+  var storeTotalsRow = document.createElement('td');
+  storeTotalsRow.textContent = 'Total Cookies Sold for ' + storesList[i].location + ' is ' + storesList[i].hourlyCookieSales[0];
+  tFootTrEl.appendChild(storeTotalsRow);
+  tFootEl.appendChild(tFootTrEl);
+};
