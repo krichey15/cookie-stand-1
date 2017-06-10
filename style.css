@@ -1,0 +1,26 @@
+body {
+  background-image: url(http://wallpapercave.com/wp/UUSiDLb.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+h1 {
+  font-family: 'Allura';font-size: 100px;
+  text-align: center;
+  color: #FFBE31;
+}
+
+#location-content {
+  background: rgba(175, 175, 175, 0.2);
+  border-radius: 25px;
+}
+
+h3 {
+  font-family: 'Allura';font-size: 48px;
+  text-align: left;
+  color: #FFBE31;
+  margin: 20px;
+}
+
+/* add in brown outline around cream colored text. add in salmon logo.
