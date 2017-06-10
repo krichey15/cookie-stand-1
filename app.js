@@ -75,6 +75,27 @@ var seattleCenterLocation = {
   hourlyCookieSales: [0]
 };
 
+seattleCenterLocation.generateRandomCookiesPerHour = function(min, max) {
+  var randomCustPerHour = Math.floor(Math.random() * (max - min + 1)) + min;
+  seattleCenterLocation.hourlyCookieSales[1] = randomCustPerHour * Math.floor(seattleCenterLocation.averageCookiesSoldPerCust);
+  seattleCenterLocation.hourlyCookieSales[0] = seattleCenterLocation.hourlyCookieSales[0] + seattleCenterLocation.hourlyCookieSales[1];
+  return seattleCenterLocation.hourlyCookieSales;
+};
+
+for (var i = 0; i < 15; i++) {
+  seattleCenterLocation.generateRandomCookiesPerHour(seattleCenterLocation.minCustomersPerHour, seattleCenterLocation.maxCustomersPerHour);
+  console.log('In the ' + seattleCenterLocation.location + ' location, at ' + seattleCenterLocation.hoursOfOperation[i] + ', total amount of cookies sold is ' + seattleCenterLocation.hourlyCookieSales[0] + '. Total cookies sold this hour were ' + seattleCenterLocation.hourlyCookieSales[1] + '.');
+
+  var seattleCenterLocationUlElement = document.getElementById('seattle-center');
+
+  var listItemElement3 = document.createElement('li');
+
+  listItemElement3.textContent = 'In the ' + seattleCenterLocation.location + ' location, at ' + seattleCenterLocation.hoursOfOperation[i] + ', total amount of cookies sold is ' + seattleCenterLocation.hourlyCookieSales[0] + '. Total cookies sold this hour were ' + seattleCenterLocation.hourlyCookieSales[1] + '.';
+
+  seattleCenterLocationUlElement.appendChild(listItemElement3);
+
+}
+
 var capitolHillLocation = {
   location : 'Capitol Hill',
   minCustomersPerHour : 20,
@@ -84,6 +105,27 @@ var capitolHillLocation = {
   hourlyCookieSales: [0]
 };
 
+capitolHillLocation.generateRandomCookiesPerHour = function(min, max) {
+  var randomCustPerHour = Math.floor(Math.random() * (max - min + 1)) + min;
+  capitolHillLocation.hourlyCookieSales[1] = randomCustPerHour * Math.floor(capitolHillLocation.averageCookiesSoldPerCust);
+  capitolHillLocation.hourlyCookieSales[0] = capitolHillLocation.hourlyCookieSales[0] + capitolHillLocation.hourlyCookieSales[1];
+  return capitolHillLocation.hourlyCookieSales;
+};
+
+for (var i = 0; i < 15; i++) {
+  capitolHillLocation.generateRandomCookiesPerHour(capitolHillLocation.minCustomersPerHour, capitolHillLocation.maxCustomersPerHour);
+  console.log('In the ' + capitolHillLocation.location + ' location, at ' + capitolHillLocation.hoursOfOperation[i] + ', total amount of cookies sold is ' + capitolHillLocation.hourlyCookieSales[0] + '. Total cookies sold this hour were ' + capitolHillLocation.hourlyCookieSales[1] + '.');
+
+  var capitolHillLocationUlElement = document.getElementById('capitol-hill');
+
+  var listItemElement4 = document.createElement('li');
+
+  listItemElement4.textContent = 'In the ' + capitolHillLocation.location + ' location, at ' + capitolHillLocation.hoursOfOperation[i] + ', total amount of cookies sold is ' + capitolHillLocation.hourlyCookieSales[0] + '. Total cookies sold this hour were ' + capitolHillLocation.hourlyCookieSales[1] + '.';
+
+  capitolHillLocationUlElement.appendChild(listItemElement4);
+
+}
+
 var alkiLocation = {
   location : 'Alki Beach',
   minCustomersPerHour : 2,
@@ -92,3 +134,24 @@ var alkiLocation = {
   hoursOfOperation : ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'],
   hourlyCookieSales: [0]
 };
+
+alkiLocation.generateRandomCookiesPerHour = function(min, max) {
+  var randomCustPerHour = Math.floor(Math.random() * (max - min + 1)) + min;
+  alkiLocation.hourlyCookieSales[1] = randomCustPerHour * Math.floor(alkiLocation.averageCookiesSoldPerCust);
+  alkiLocation.hourlyCookieSales[0] = alkiLocation.hourlyCookieSales[0] + alkiLocation.hourlyCookieSales[1];
+  return alkiLocation.hourlyCookieSales;
+};
+
+for (var i = 0; i < 15; i++) {
+  alkiLocation.generateRandomCookiesPerHour(alkiLocation.minCustomersPerHour, alkiLocation.maxCustomersPerHour);
+  console.log('In the ' + alkiLocation.location + ' location, at ' + alkiLocation.hoursOfOperation[i] + ', total amount of cookies sold is ' + alkiLocation.hourlyCookieSales[0] + '. Total cookies sold this hour were ' + alkiLocation.hourlyCookieSales[1] + '.');
+
+  var alkiLocationUlElement = document.getElementById('alki');
+
+  var listItemElement5 = document.createElement('li');
+
+  listItemElement5.textContent = 'In the ' + alkiLocation.location + ' location, at ' + alkiLocation.hoursOfOperation[i] + ', total amount of cookies sold is ' + alkiLocation.hourlyCookieSales[0] + '. Total cookies sold this hour were ' + alkiLocation.hourlyCookieSales[1] + '.';
+
+  alkiLocationUlElement.appendChild(listItemElement5);
+
+}
