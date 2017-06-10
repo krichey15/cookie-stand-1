@@ -6,21 +6,26 @@ body {
 }
 
 h1 {
-  font-family: 'Allura';font-size: 100px;
+  font-family: 'Allura';font-size: 120px;
   text-align: center;
   color: #FFBE31;
+  text-shadow: 4px 2px #291300;
 }
 
 #location-content {
   background: rgba(175, 175, 175, 0.2);
-  border-radius: 25px;
+  border-radius: 20px;
 }
 
 h3 {
-  font-family: 'Allura';font-size: 48px;
+  font-family: 'Allura';font-size: 60px;
   text-align: left;
   color: #FFBE31;
   margin: 20px;
+  text-shadow: 3px 2px #291300;
 }
 
-/* add in brown outline around cream colored text. add in salmon logo.
+p {
+  margin: 20px;
+  font-family: 'Cuprum';font-size: 22px;
+}
