@@ -13,6 +13,8 @@ var firstAndPikeLocation = {
 
 //below is a method I've defined for my 1st and Pike location object that's sole purpose is to generate and return TWO NUMBERS: The total amount of cookies sold overall AND the total amount of cookies sold in the past hour. Total cookies sold is stored in the first [0] index of the hourly cookie sales array while the amount of cookies sold in the last hour is stored in the second [1] index of the array.
 
+//the below function can be set with a 'store' parameter and the code in it can be reworked to say store.hourlyCookieSales etc. This way it can be called once.
+
 firstAndPikeLocation.generateRandomCookiesPerHour = function(min, max) {
   var randomCustPerHour = Math.floor(Math.random() * (max - min + 1)) + min;
   firstAndPikeLocation.hourlyCookieSales[1] = randomCustPerHour * Math.floor(firstAndPikeLocation.averageCookiesSoldPerCust);
@@ -21,6 +23,8 @@ firstAndPikeLocation.generateRandomCookiesPerHour = function(min, max) {
 };
 
 //below is a for loop I've created that loops through the hours of operation starting at 6am and displays both how many total cookies the store has sold AND how many cookies were sold in the last hour. It also now prints html content to my sales.html page. It prints the same statement that I've told the console.log to by adding an li to my ul for every loop through the code.
+
+//the below loop can be wrapped in a function that takes 'store' as a parameter. Changing the i < 15 to store.location and changing the other lines of code to say store. can make this get called just once. Changing the getElementById to createElement would allow you to pass in the store.locations so that this function can be more dynamic. You can then make another function whose sole purpose is to call both functions, passing in the store names as parameters.
 
 for (var i = 0; i < 15; i++) {
   firstAndPikeLocation.generateRandomCookiesPerHour(firstAndPikeLocation.minCustomersPerHour, firstAndPikeLocation.maxCustomersPerHour);
