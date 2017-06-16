@@ -1,29 +1,25 @@
 'use strict';
 
-function Store(location, minCustomersPerHour, maxCustomersPerHour, averageCookiesSoldPerCust, hoursOfOperation, hourlyCookieSales, hourlyCookieTossers, averageHourlyCustomers) {
+function Store(location, minCustomersPerHour, maxCustomersPerHour, averageCookiesSoldPerCust) {
   this.location = location;
   this.minCustomersPerHour = minCustomersPerHour;
   this.maxCustomersPerHour = maxCustomersPerHour;
   this.averageCookiesSoldPerCust = averageCookiesSoldPerCust;
-  this.hoursOfOperation = hoursOfOperation;
-  this.hourlyCookieSales = hourlyCookieSales;
-  this.hourlyCookieTossers = hourlyCookieTossers;
-  this.averageHourlyCustomers = averageHourlyCustomers;
+  this.hoursOfOperation = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm',];
+  this.hourlyCookieSales = [];
+  this.hourlyCookieTossers = [];
+  this.averageHourlyCustomers = [];
 }
 
 Store.prototype.createStoresList = function() {
   storesList.push(store);
 };
 
-var firstAndPikeLocation = new Store('1st and Pike', 23, 65, 6.3, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm',], [], [], []);
-
-var seatacLocation = new Store('Seatac International Airport', 3, 24, 1.2, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm',], [], [], []);
-
-var seattleCenterLocation = new Store('Seattle Center', 11, 38, 3.7, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm',], [], [], []);
-
-var capitolHillLocation = new Store('Capitol Hill', 20, 38, 2.3, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm',], [], [], []);
-
-var alkiLocation = new Store('Alki Beach', 2, 16, 4.6, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm',], [], [], []);
+var firstAndPikeLocation = new Store('1st and Pike', 23, 65, 6.3);
+var seatacLocation = new Store('Seatac International Airport', 3, 24, 1.2);
+var seattleCenterLocation = new Store('Seattle Center', 11, 38, 3.7);
+var capitolHillLocation = new Store('Capitol Hill', 20, 38, 2.3);
+var alkiLocation = new Store('Alki Beach', 2, 16, 4.6);
 
 var storesList = [firstAndPikeLocation, seatacLocation, seattleCenterLocation, capitolHillLocation, alkiLocation];
 
@@ -34,14 +30,9 @@ var tbodyEl = document.getElementById('store-information-table');
 var theadEl = document.getElementById('hours-of-operation');
 var tFootEl = document.getElementById('totals');
 var tFootTrEl = document.createElement('tr');
-tFootEl.appendChild(tFootTrEl);
 
-//this array holds each stores cookies sold per hour, meaning that the first 5 values (and every consequent 5 values) are each stores numbers for every hour the store is open. This is basically temporary storage needed to use the reduce method to push the sum variable into the hourlyStoreData array.
-var hourlyStoreData = [];
-//this array uses the reduce method to combine every 5 values of the hourlyStoreData array. I did this in hopes to create an array to easily pull each stores hourly totals for cookies sold, which I put in the table footer. But because the reduce method returns the value every time, the footer displays the hourly totals that continuously add to themselves (which isn't what I wanted).
-var hourArray = [];
-//this is an array that holds each stores complete daily totals for cookies sold, using the reduce method to gain 5 values.
 var storeHourlyCookieTotalsList = [];
+var answerArray = [];
 
 var getOneStoreCookiesPerHour = function(store) {
   var randomCustNum;
@@ -66,12 +57,14 @@ var getHourlyCookiesData = function(store) {
   getAllStoresCookiesPerHour();
   for(var k = 0; k < store.hoursOfOperation.length; k++) {
     for(var j = 0; j < storesList.length; j++) {
-      hourlyStoreData.push(storesList[j].hourlyCookieSales[k]);
+      var num1 = storesList[0].hourlyCookieSales[k];
+      var num2 = storesList[1].hourlyCookieSales[k];
+      var num3 = storesList[2].hourlyCookieSales[k];
+      var num4 = storesList[3].hourlyCookieSales[k];
+      var num5 = storesList[4].hourlyCookieSales[k];
     }
-    var sum = hourlyStoreData.reduce( function(total, amount){
-      return total + amount;
-    });
-    hourArray.push(sum);
+    var answer = num1 + num2 + num3 + num4 + num5;
+    answerArray.push(answer);
   }
 };
 
@@ -115,17 +108,18 @@ var printFooterInfo = function(){
   var hourlyTotalRow = document.createElement('td');
   hourlyTotalRow.textContent = 'Totals Per Hour';
   tFootTrEl.appendChild(hourlyTotalRow);
-  for(var i = 0; i < hourArray.length; i++) {
+  for(var i = 0; i < answerArray.length; i++) {
     var totalsForHour = document.createElement('td');
-    totalsForHour.textContent = hourArray[i];
+    totalsForHour.textContent = answerArray[i];
     tFootTrEl.appendChild(totalsForHour);
   }
   var totalsForAllStores = document.createElement('td');
-  var sumStoreTotal = storeHourlyCookieTotalsList.reduce( function(total, amount){
+  var sumStoreTotal = answerArray.reduce( function(total, amount){
     return total + amount;
   });
   totalsForAllStores.textContent = sumStoreTotal;
   tFootTrEl.appendChild(totalsForAllStores);
+  tFootEl.appendChild(tFootTrEl);
 };
 
 var getCookieTossersPerHour = function() {
