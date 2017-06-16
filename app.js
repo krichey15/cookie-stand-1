@@ -62,25 +62,6 @@ var getAllStoresCookiesPerHour = function() {
   }
 };
 
-//below is a function that gets the hourly cookie tossers needed per location. I still need to add a function that creates and renders a separate table to my sales.html file.
-
-var getCookieTossersPerHour = function() {
-  for(var j = 0; j < storesList.length; j++) {
-    for(var i = 0; i < storesList[j].averageHourlyCustomers.length; i++) {
-      if (storesList[j].averageHourlyCustomers[i] > 60) {
-        console.log(storesList[j].location + ' needed two additional Salmon Cookie Tossers!');
-        storesList[j].hourlyCookieTossers.push(4);
-      } else if(storesList[j].averageHourlyCustomers[i] > 40) {
-        console.log(storesList[j].location + ' needed one additional Salmon Cookie Tosser.');
-        storesList[j].hourlyCookieTossers.push(3);
-      } else {
-        storesList[j].hourlyCookieTossers.push(2);
-        console.log(storesList[j].location + ' does not need additional Salmon Cookie Tossers.');
-      }
-    }
-  }
-};
-
 var getHourlyCookiesData = function(store) {
   getAllStoresCookiesPerHour();
   for(var k = 0; k < store.hoursOfOperation.length; k++) {
@@ -91,20 +72,6 @@ var getHourlyCookiesData = function(store) {
       return total + amount;
     });
     hourArray.push(sum);
-    console.log(sum);
-  }
-};
-
-//below is an unfinished function to render Jo's table data on cookie tossers!
-
-var printJoTable = function() {
-  for(var i = 0; i < storesList.length; i++) {
-    var trBodyElJo = document.createElement('tr');
-    for(var j = 0; j < storesList[i].hoursOfOperation.length; j++) {
-      var cookieTosserInfo = document.createElement('td');
-      cookieTosserInfo.textContent = storesList[i].hourlyCookieTossers;
-      trEl.appendChild(storeNameTable);
-    }
   }
 };
 
@@ -125,11 +92,9 @@ var printTableHeadingHours = function(store) {
 var printTableBodyInfo = function() {
   for (var i = 0; i < storesList.length; i++) {
     var trEl = document.createElement('tr');
-
     var storeNameTable = document.createElement('td');
     storeNameTable.textContent = storesList[i].location;
     trEl.appendChild(storeNameTable);
-
     for(var j = 0; j < storesList[i].hoursOfOperation.length; j++) {
       var storeInfoRow = document.createElement('td');
       storeInfoRow.textContent = storesList[i].hourlyCookieSales[j];
@@ -150,34 +115,69 @@ var printFooterInfo = function(){
   var hourlyTotalRow = document.createElement('td');
   hourlyTotalRow.textContent = 'Totals Per Hour';
   tFootTrEl.appendChild(hourlyTotalRow);
-
   for(var i = 0; i < hourArray.length; i++) {
     var totalsForHour = document.createElement('td');
     totalsForHour.textContent = hourArray[i];
     tFootTrEl.appendChild(totalsForHour);
   }
-
   var totalsForAllStores = document.createElement('td');
   var sumStoreTotal = storeHourlyCookieTotalsList.reduce( function(total, amount){
     return total + amount;
   });
   totalsForAllStores.textContent = sumStoreTotal;
   tFootTrEl.appendChild(totalsForAllStores);
-
 };
 
-var getCookiesPrintTable = function() {
+var getCookieTossersPerHour = function() {
+  for(var j = 0; j < storesList.length; j++) {
+    for(var i = 0; i < storesList[j].averageHourlyCustomers.length; i++) {
+      if (storesList[j].averageHourlyCustomers[i] > 60) {
+        storesList[j].hourlyCookieTossers.push(4);
+      } else if(storesList[j].averageHourlyCustomers[i] > 40) {
+        storesList[j].hourlyCookieTossers.push(3);
+      } else {
+        storesList[j].hourlyCookieTossers.push(2);
+      }
+    }
+  }
+};
+
+var printJoHeaderHours = function(store) {
+  var trHeadElJo = document.createElement('tr');
+  var hoursTd = document.createElement('td');
+  hoursTd.textContent = '';
+  trHeadElJo.appendChild(hoursTd);
+  for(var i = 0; i < store.hoursOfOperation.length; i++) {
+    var tdHeadElJo = document.createElement('td');
+    tdHeadElJo.textContent = store.hoursOfOperation[i];
+    trHeadElJo.appendChild(tdHeadElJo);
+  }
+  theadElJo.appendChild(trHeadElJo);
+};
+
+var printJoTable = function() {
+  for(var i = 0; i < storesList.length; i++) {
+    var trBodyElJo = document.createElement('tr');
+    var storeNameTable = document.createElement('td');
+    storeNameTable.textContent = storesList[i].location + ' Customers Per Hour/Tossers Per Hour:';
+    trBodyElJo.appendChild(storeNameTable);
+    for(var j = 0; j < storesList[i].hoursOfOperation.length; j++) {
+      var cookieTosserInfo = document.createElement('td');
+      cookieTosserInfo.textContent = storesList[i].averageHourlyCustomers[j] + '/' + storesList[i].hourlyCookieTossers[j];
+      trBodyElJo.appendChild(cookieTosserInfo);
+    }
+    tbodyElJo.appendChild(trBodyElJo);
+  }
+};
+
+var getAllDataPrintBothTables = function() {
   getHourlyCookiesData(firstAndPikeLocation);
   printTableHeadingHours(firstAndPikeLocation);
   printTableBodyInfo();
   printFooterInfo();
+  getCookieTossersPerHour();
+  printJoTable();
+  printJoHeaderHours(firstAndPikeLocation);
 };
 
-getCookiesPrintTable();
-getCookieTossersPerHour();
-console.log(firstAndPikeLocation.hourlyCookieTossers);
-console.log(seattleCenterLocation.hourlyCookieTossers);
-
-console.log(hourlyStoreData);
-console.log(hourArray);
-console.log(storeHourlyCookieTotalsList);
+getAllDataPrintBothTables();
