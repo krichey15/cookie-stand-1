@@ -12,7 +12,7 @@ h1 {
   text-shadow: 4px 2px #291300;
 }
 
-#location-content {
+.location-content {
   background: rgba(175, 175, 175, 0.2);
   border-radius: 20px;
 }
@@ -28,4 +28,12 @@ h3 {
 p {
   margin: 20px;
   font-family: 'Cuprum';font-size: 22px;
+}
+
+#first-and-pike-div {
+  
+}
+
+img {
+  float: left;
 }
