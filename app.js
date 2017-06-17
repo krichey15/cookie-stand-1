@@ -59,6 +59,19 @@ Store.prototype.makeRow = function() {
   tbodyEl.appendChild(trEl);
 };
 
+Store.prototype.printJoTable = function() {
+  var trBodyElJo = document.createElement('tr');
+  var storeNameTable = document.createElement('td');
+  storeNameTable.textContent = this.location + ' Customers Per Hour/Tossers Per Hour:';
+  trBodyElJo.appendChild(storeNameTable);
+  for(var j = 0; j < this.hoursOfOperation.length; j++) {
+    var cookieTosserInfo = document.createElement('td');
+    cookieTosserInfo.textContent = this.averageHourlyCustomers[j] + '/' + this.hourlyCookieTossers[j];
+    trBodyElJo.appendChild(cookieTosserInfo);
+  }
+  tbodyElJo.appendChild(trBodyElJo);
+};
+
 var firstAndPikeLocation = new Store('1st and Pike', 23, 65, 6.3);
 firstAndPikeLocation.makeRow();
 var seatacLocation = new Store('Seatac International Airport', 3, 24, 1.2);
@@ -85,15 +98,15 @@ var getHourlyCookiesData = function(store) {
 };
 
 var printTableHeadingHours = function(store) {
-  var hoursTd = document.createElement('td');
-  hoursTd.textContent = '';
+  var hoursTd = document.createElement('th');
+  hoursTd.textContent = 'Stores';
   theadEl.appendChild(hoursTd);
   for (var i = 0; i < store.hoursOfOperation.length; i++) {
-    var tdHeadEl = document.createElement('td');
-    tdHeadEl.textContent = store.hoursOfOperation[i];
-    theadEl.appendChild(tdHeadEl);
+    var thHeadEl = document.createElement('th');
+    thHeadEl.textContent = store.hoursOfOperation[i];
+    theadEl.appendChild(thHeadEl);
   }
-  var totalPerLocation = document.createElement('td');
+  var totalPerLocation = document.createElement('th');
   totalPerLocation.textContent = 'Total for Location';
   theadEl.appendChild(totalPerLocation);
 };
@@ -143,31 +156,20 @@ var printJoHeaderHours = function(store) {
   theadElJo.appendChild(trHeadElJo);
 };
 
-var printJoTable = function() {
-  for(var i = 0; i < storesList.length; i++) {
-    var trBodyElJo = document.createElement('tr');
-    var storeNameTable = document.createElement('td');
-    storeNameTable.textContent = storesList[i].location + ' Customers Per Hour/Tossers Per Hour:';
-    trBodyElJo.appendChild(storeNameTable);
-    for(var j = 0; j < storesList[i].hoursOfOperation.length; j++) {
-      var cookieTosserInfo = document.createElement('td');
-      cookieTosserInfo.textContent = storesList[i].averageHourlyCustomers[j] + '/' + storesList[i].hourlyCookieTossers[j];
-      trBodyElJo.appendChild(cookieTosserInfo);
-    }
-    tbodyElJo.appendChild(trBodyElJo);
-  }
-};
-
 var getAllDataPrintBothTables = function() {
   getHourlyCookiesData(firstAndPikeLocation);
   printTableHeadingHours(firstAndPikeLocation);
   printFooterInfo();
   getCookieTossersPerHour();
-  printJoTable();
   printJoHeaderHours(firstAndPikeLocation);
 };
 
 getAllDataPrintBothTables();
+firstAndPikeLocation.printJoTable();
+seatacLocation.printJoTable();
+seattleCenterLocation.printJoTable();
+capitolHillLocation.printJoTable();
+alkiLocation.printJoTable();
 
 formEl.addEventListener('submit', handleSubmit);
 
@@ -180,12 +182,11 @@ function handleSubmit(event){
   var maxCustomersPerHour = parseInt(event.target.maxCustomersPerHour.value);
   var averageCookiesSoldPerCust = parseInt(event.target.averageCookiesSoldPerCust.value);
 
-  // var newStore = new Store(location, minCustomersPerHour, maxCustomersPerHour, averageCookiesSoldPerCust);
-
   if(location === '1st and Pike' || location === 'Seattle International Airport' || location === 'Seattle Center' || location === 'Capitol Hill' || location === 'Alki Beach') {
     alert('Invalid input, that store already exists.');
   } else {
     var newStore = new Store(location, minCustomersPerHour, maxCustomersPerHour, averageCookiesSoldPerCust);
     newStore.makeRow();
+    newStore.printJoTable();
   }
 }
