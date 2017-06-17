@@ -3,6 +3,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  margin: 0px;
 }
 
 h1 {
@@ -27,13 +28,28 @@ h3 {
 
 p {
   margin: 20px;
-  font-family: 'Cuprum';font-size: 22px;
-}
-
-#first-and-pike-div {
-  
+  font-family: 'Cuprum';
+  font-size: 22px;
+  display: inline;
 }
 
 img {
-  float: left;
+  display: inline;
+  padding: 20px;
+}
+
+nav {
+  font-family: 'Allura';
+  font-size: 30px;
+  margin: 20px;
+  text-shadow: 3px 2px #291300;
+  text-align: center;
+  background-color: black;
+  margin-top: 0px;
+}
+
+a {
+  color: #FFBE31;
+  text-decoration: none;
+  padding: 20px;
 }
