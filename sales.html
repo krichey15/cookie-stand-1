@@ -17,6 +17,28 @@
     <tbody id="cookie-tosser-info"></tbody>
     <tfoot id="cookie-tosser-footer"></tfoot>
   </table>
+  <form id="form">
+      <fieldset>
+        <legend>New Item:</legend>
+
+        <div>
+          <label for="itemName">New Item Name:</label>
+          <input id="item-name-input" type="text" name="itemName" placeholder="Shoes" required>
+        </div>
+
+        <div>
+          <label for="itemPrice">Item Price:</label>
+          <input type="number" min="0.001" step="any" name="itemPrice" value="" required>
+        </div>
+
+        <div>
+          <label for="itemColor">Item Color:</label>
+          <input type="text" name="itemColor" value="">
+        </div>
+
+        <input type="submit" value="Add New Item">
+      </fieldset>
+    </form>
   <script type="text/javascript" src="app.js"></script>
 </body>
 </html>
