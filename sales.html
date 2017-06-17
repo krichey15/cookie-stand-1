@@ -19,24 +19,29 @@
   </table>
   <form id="form">
       <fieldset>
-        <legend>New Item:</legend>
+        <legend>New Store Creator:</legend>
 
         <div>
-          <label for="itemName">New Item Name:</label>
-          <input id="item-name-input" type="text" name="itemName" placeholder="Shoes" required>
+          <label for="location">New Store Name:</label>
+          <input id="location-name-input" type="text" name="location" placeholder="Enter Store Name" required>
         </div>
 
         <div>
-          <label for="itemPrice">Item Price:</label>
-          <input type="number" min="0.001" step="any" name="itemPrice" value="" required>
+          <label for="minCustomersPerHour">Minimum Customers Per Hour:</label>
+          <input type="number" name="minCustomersPerHour" value="" placeholder="Enter Number Here" required>
         </div>
 
         <div>
-          <label for="itemColor">Item Color:</label>
-          <input type="text" name="itemColor" value="">
+          <label for="maxCustomersPerHour">Maximum Customers Per Hour:</label>
+          <input type="number" name="maxCustomersPerHour" value="" placeholder="Enter Number Here"  required>
         </div>
 
-        <input type="submit" value="Add New Item">
+        <div>
+          <label for="averageCookiesSoldPerCust">Average Cookies Per Person:</label>
+          <input type="number" step=".1" name="averageCookiesSoldPerCust" min="0" placeholder="Enter Number Here" required>
+        </div>
+
+        <input type="submit" value="Add New Store">
       </fieldset>
     </form>
   <script type="text/javascript" src="app.js"></script>

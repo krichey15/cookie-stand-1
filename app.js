@@ -11,36 +11,15 @@ function Store(location, minCustomersPerHour, maxCustomersPerHour, averageCookie
   this.averageHourlyCustomers = [];
 }
 
-Store.prototype.makeRow = function() {
-  for (var i = 0; i < stores.length; i++) {
-    var trEl = document.createElement('tr');
-    var storeNameTable = document.createElement('td');
-    storeNameTable.textContent = storesList[i].location;
-    trEl.appendChild(storeNameTable);
-    for(var j = 0; j < storesList[i].hoursOfOperation.length; j++) {
-      var storeInfoRow = document.createElement('td');
-      storeInfoRow.textContent = storesList[i].hourlyCookieSales[j];
-      trEl.appendChild(storeInfoRow);
-    }
-    var sumStore = storesList[i].hourlyCookieSales.reduce( function(total, amount){
-      return total + amount;
-    });
-    storeHourlyCookieTotalsList.push(sumStore);
-    var totalCookiesSoldSlot = document.createElement('td');
-    totalCookiesSoldSlot.textContent = sumStore;
-    trEl.appendChild(totalCookiesSoldSlot);
-    tbodyEl.appendChild(trEl);
-  }
+var whatever = {
+  num1 : [],
+  num2 : [],
+  num3 : [],
+  num4 : [],
+  num5 : []
 };
 
-var firstAndPikeLocation = new Store('1st and Pike', 23, 65, 6.3);
-var seatacLocation = new Store('Seatac International Airport', 3, 24, 1.2);
-var seattleCenterLocation = new Store('Seattle Center', 11, 38, 3.7);
-var capitolHillLocation = new Store('Capitol Hill', 20, 38, 2.3);
-var alkiLocation = new Store('Alki Beach', 2, 16, 4.6);
-
-var storesList = [firstAndPikeLocation, seatacLocation, seattleCenterLocation, capitolHillLocation, alkiLocation];
-
+var formEl = document.getElementById('form');
 var tbodyElJo = document.getElementById('cookie-tosser-info');
 var theadElJo = document.getElementById('cookie-tosser-header');
 var tFootElJo = document.getElementById('cookie-tosser-footer');
@@ -49,6 +28,7 @@ var theadEl = document.getElementById('hours-of-operation');
 var tFootEl = document.getElementById('totals');
 var tFootTrEl = document.createElement('tr');
 
+var storesList = [];
 var storeHourlyCookieTotalsList = [];
 var answerArray = [];
 
@@ -60,66 +40,84 @@ var getOneStoreCookiesPerHour = function(store) {
   };
   for(var i = 0; i < store.hoursOfOperation.length; i++) {
     store.averageHourlyCustomers.push(generateRandomCustomersPerHour(store.minCustomersPerHour, store.maxCustomersPerHour));
-    store.hourlyCookieSales.push(generateRandomCustomersPerHour(store.minCustomersPerHour, store.maxCustomersPerHour) * Math.floor(store.averageCookiesSoldPerCust));
+    store.hourlyCookieSales.push(generateRandomCustomersPerHour(store.minCustomersPerHour, store.maxCustomersPerHour) * Math.round(store.averageCookiesSoldPerCust));
   }
 };
 
-var getAllStoresCookiesPerHour = function() {
-  for(var i = 0; i < storesList.length; i++) {
-    getOneStoreCookiesPerHour(storesList[i]);
-    console.log(storesList[i].location + ' has sold ' + storesList[i].hourlyCookieSales);
+Store.prototype.makeRow = function() {
+  storesList.push(this);
+  getOneStoreCookiesPerHour(this);
+  console.log(this);
+  var trEl = document.createElement('tr');
+  var storeNameTable = document.createElement('td');
+  storeNameTable.textContent = this.location;
+  trEl.appendChild(storeNameTable);
+  for (var i = 0; i < this.hoursOfOperation.length; i++) {
+    var storeInfoRow = document.createElement('td');
+    storeInfoRow.textContent = this.hourlyCookieSales[i];
+    trEl.appendChild(storeInfoRow);
   }
+  var sumStore = this.hourlyCookieSales.reduce( function(total, amount){
+    return total + amount;
+  });
+  storeHourlyCookieTotalsList.push(sumStore);
+  var totalCookiesSoldSlot = document.createElement('td');
+  totalCookiesSoldSlot.textContent = sumStore;
+  trEl.appendChild(totalCookiesSoldSlot);
+  tbodyEl.appendChild(trEl);
 };
+
+Store.prototype.printJoTable = function() {
+  var trBodyElJo = document.createElement('tr');
+  var storeNameTable = document.createElement('td');
+  storeNameTable.textContent = this.location + ' Customers Per Hour/Tossers Per Hour:';
+  trBodyElJo.appendChild(storeNameTable);
+  for(var j = 0; j < this.hoursOfOperation.length; j++) {
+    var cookieTosserInfo = document.createElement('td');
+    cookieTosserInfo.textContent = this.averageHourlyCustomers[j] + '/' + this.hourlyCookieTossers[j];
+    trBodyElJo.appendChild(cookieTosserInfo);
+  }
+  tbodyElJo.appendChild(trBodyElJo);
+};
+
+var firstAndPikeLocation = new Store('1st and Pike', 23, 65, 6.3);
+firstAndPikeLocation.makeRow();
+var seatacLocation = new Store('Seatac International Airport', 3, 24, 1.2);
+seatacLocation.makeRow();
+var seattleCenterLocation = new Store('Seattle Center', 11, 38, 3.7);
+seattleCenterLocation.makeRow();
+var capitolHillLocation = new Store('Capitol Hill', 20, 38, 2.3);
+capitolHillLocation.makeRow();
+var alkiLocation = new Store('Alki Beach', 2, 16, 4.6);
+alkiLocation.makeRow();
 
 var getHourlyCookiesData = function(store) {
-  getAllStoresCookiesPerHour();
   for(var k = 0; k < store.hoursOfOperation.length; k++) {
     for(var j = 0; j < storesList.length; j++) {
-      var num1 = storesList[0].hourlyCookieSales[k];
-      var num2 = storesList[1].hourlyCookieSales[k];
-      var num3 = storesList[2].hourlyCookieSales[k];
-      var num4 = storesList[3].hourlyCookieSales[k];
-      var num5 = storesList[4].hourlyCookieSales[k];
+      whatever.num1 = storesList[0].hourlyCookieSales[k];
+      whatever.num2 = storesList[1].hourlyCookieSales[k];
+      whatever.num3 = storesList[2].hourlyCookieSales[k];
+      whatever.num4 = storesList[3].hourlyCookieSales[k];
+      whatever.num5 = storesList[4].hourlyCookieSales[k];
     }
-    var answer = num1 + num2 + num3 + num4 + num5;
+    var answer = whatever.num1 + whatever.num2 + whatever.num3 + whatever.num4 + whatever.num5;
     answerArray.push(answer);
+    console.log(answerArray);
   }
 };
 
 var printTableHeadingHours = function(store) {
-  var hoursTd = document.createElement('td');
-  hoursTd.textContent = '';
+  var hoursTd = document.createElement('th');
+  hoursTd.textContent = 'Stores';
   theadEl.appendChild(hoursTd);
   for (var i = 0; i < store.hoursOfOperation.length; i++) {
-    var tdHeadEl = document.createElement('td');
-    tdHeadEl.textContent = store.hoursOfOperation[i];
-    theadEl.appendChild(tdHeadEl);
+    var thHeadEl = document.createElement('th');
+    thHeadEl.textContent = store.hoursOfOperation[i];
+    theadEl.appendChild(thHeadEl);
   }
-  var totalPerLocation = document.createElement('td');
+  var totalPerLocation = document.createElement('th');
   totalPerLocation.textContent = 'Total for Location';
   theadEl.appendChild(totalPerLocation);
-};
-
-var printTableBodyInfo = function() {
-  for (var i = 0; i < storesList.length; i++) {
-    var trEl = document.createElement('tr');
-    var storeNameTable = document.createElement('td');
-    storeNameTable.textContent = storesList[i].location;
-    trEl.appendChild(storeNameTable);
-    for(var j = 0; j < storesList[i].hoursOfOperation.length; j++) {
-      var storeInfoRow = document.createElement('td');
-      storeInfoRow.textContent = storesList[i].hourlyCookieSales[j];
-      trEl.appendChild(storeInfoRow);
-    }
-    var sumStore = storesList[i].hourlyCookieSales.reduce( function(total, amount){
-      return total + amount;
-    });
-    storeHourlyCookieTotalsList.push(sumStore);
-    var totalCookiesSoldSlot = document.createElement('td');
-    totalCookiesSoldSlot.textContent = sumStore;
-    trEl.appendChild(totalCookiesSoldSlot);
-    tbodyEl.appendChild(trEl);
-  }
 };
 
 var printFooterInfo = function(){
@@ -167,53 +165,46 @@ var printJoHeaderHours = function(store) {
   theadElJo.appendChild(trHeadElJo);
 };
 
-var printJoTable = function() {
-  for(var i = 0; i < storesList.length; i++) {
-    var trBodyElJo = document.createElement('tr');
-    var storeNameTable = document.createElement('td');
-    storeNameTable.textContent = storesList[i].location + ' Customers Per Hour/Tossers Per Hour:';
-    trBodyElJo.appendChild(storeNameTable);
-    for(var j = 0; j < storesList[i].hoursOfOperation.length; j++) {
-      var cookieTosserInfo = document.createElement('td');
-      cookieTosserInfo.textContent = storesList[i].averageHourlyCustomers[j] + '/' + storesList[i].hourlyCookieTossers[j];
-      trBodyElJo.appendChild(cookieTosserInfo);
-    }
-    tbodyElJo.appendChild(trBodyElJo);
-  }
-};
-
 var getAllDataPrintBothTables = function() {
   getHourlyCookiesData(firstAndPikeLocation);
   printTableHeadingHours(firstAndPikeLocation);
-  printTableBodyInfo();
   printFooterInfo();
   getCookieTossersPerHour();
-  printJoTable();
   printJoHeaderHours(firstAndPikeLocation);
 };
 
 getAllDataPrintBothTables();
-
-var formEl = document.getElementById('form');
+firstAndPikeLocation.printJoTable();
+seatacLocation.printJoTable();
+seattleCenterLocation.printJoTable();
+capitolHillLocation.printJoTable();
+alkiLocation.printJoTable();
 
 formEl.addEventListener('submit', handleSubmit);
 
 function handleSubmit(event){
   event.preventDefault();
-  console.log(event.target.itemName.value);
 
-  var itemName = event.target.itemName.value;
-  var itemPrice = event.target.itemPrice.value;
-  var itemColor = event.target.itemColor.value;
+  var location = event.target.location.value;
+  var minCustomersPerHour = parseInt(event.target.minCustomersPerHour.value);
+  var maxCustomersPerHour = parseInt(event.target.maxCustomersPerHour.value);
+  var averageCookiesSoldPerCust = parseInt(event.target.averageCookiesSoldPerCust.value);
 
-  var newItem = new Item(itemName, itemPrice, itemColor);
-  newItem.makeRow();
-}
+  if(location === '1st and Pike' || location === 'Seattle International Airport' || location === 'Seattle Center' || location === 'Capitol Hill' || location === 'Alki Beach') {
+    alert('Invalid input, that store already exists.');
+  } else {
+    var newStore = new Store(location, minCustomersPerHour, maxCustomersPerHour, averageCookiesSoldPerCust);
+    newStore.makeRow();
+    tFootEl.removeChild(tFootTrEl);
+    var array1 = newStore.hourlyCookieSales;
+    var array2 = answerArray;
 
-var bodyElement = document.body;
+    var sum = array1.map(function (num, idx) {
+      return num + array2[idx];
+    }); // [6,8,10,12]
 
-// bodyElement.addEventListener('submit', tableClicked);
-
-function tableClicked(event){
-  console.log(event.target);
+    console.log(sum);
+    // newStore.printJoTable();
+    // printFooterInfo();
+  }
 }
