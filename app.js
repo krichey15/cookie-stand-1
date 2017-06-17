@@ -11,6 +11,14 @@ function Store(location, minCustomersPerHour, maxCustomersPerHour, averageCookie
   this.averageHourlyCustomers = [];
 }
 
+var whatever = {
+  num1 : [],
+  num2 : [],
+  num3 : [],
+  num4 : [],
+  num5 : []
+};
+
 var formEl = document.getElementById('form');
 var tbodyElJo = document.getElementById('cookie-tosser-info');
 var theadElJo = document.getElementById('cookie-tosser-header');
@@ -86,14 +94,15 @@ alkiLocation.makeRow();
 var getHourlyCookiesData = function(store) {
   for(var k = 0; k < store.hoursOfOperation.length; k++) {
     for(var j = 0; j < storesList.length; j++) {
-      var num1 = storesList[0].hourlyCookieSales[k];
-      var num2 = storesList[1].hourlyCookieSales[k];
-      var num3 = storesList[2].hourlyCookieSales[k];
-      var num4 = storesList[3].hourlyCookieSales[k];
-      var num5 = storesList[4].hourlyCookieSales[k];
+      whatever.num1 = storesList[0].hourlyCookieSales[k];
+      whatever.num2 = storesList[1].hourlyCookieSales[k];
+      whatever.num3 = storesList[2].hourlyCookieSales[k];
+      whatever.num4 = storesList[3].hourlyCookieSales[k];
+      whatever.num5 = storesList[4].hourlyCookieSales[k];
     }
-    var answer = num1 + num2 + num3 + num4 + num5;
+    var answer = whatever.num1 + whatever.num2 + whatever.num3 + whatever.num4 + whatever.num5;
     answerArray.push(answer);
+    console.log(answerArray);
   }
 };
 
@@ -177,7 +186,6 @@ function handleSubmit(event){
   event.preventDefault();
 
   var location = event.target.location.value;
-  console.log(location);
   var minCustomersPerHour = parseInt(event.target.minCustomersPerHour.value);
   var maxCustomersPerHour = parseInt(event.target.maxCustomersPerHour.value);
   var averageCookiesSoldPerCust = parseInt(event.target.averageCookiesSoldPerCust.value);
@@ -187,6 +195,16 @@ function handleSubmit(event){
   } else {
     var newStore = new Store(location, minCustomersPerHour, maxCustomersPerHour, averageCookiesSoldPerCust);
     newStore.makeRow();
-    newStore.printJoTable();
+    tFootEl.removeChild(tFootTrEl);
+    var array1 = newStore.hourlyCookieSales;
+    var array2 = answerArray;
+
+    var sum = array1.map(function (num, idx) {
+      return num + array2[idx];
+    }); // [6,8,10,12]
+
+    console.log(sum);
+    // newStore.printJoTable();
+    // printFooterInfo();
   }
 }
